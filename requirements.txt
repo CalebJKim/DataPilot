@@ -1,0 +1,10 @@
+apache-airflow
+openai
+pandas
+matplotlib
+sqlalchemy
+prometheus_client
+fastapi
+uvicorn
+pydantic
+stateflow
