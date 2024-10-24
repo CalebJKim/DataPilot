@@ -8,3 +8,7 @@ fastapi
 uvicorn
 pydantic
 stateflow
+pillow
+google-generativeai
+python-dotenv
+pyyaml
