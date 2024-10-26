@@ -12,3 +12,8 @@ pillow
 google-generativeai
 python-dotenv
 pyyaml
+seaborn
+kaggle
+kagglehub
+xgboost
+google-generativeai
