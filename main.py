@@ -15,6 +15,8 @@ from sklearn.preprocessing import LabelEncoder
 
 import kagglehub
 
+project_dir = os.getcwd()
+
 # Download latest version
 path = kagglehub.dataset_download("ealaxi/paysim1")
 

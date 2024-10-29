@@ -26,6 +26,6 @@ ipcMain.handle('query-llm', async (event, userMessage) => {
     return response.data.reply;
   } catch (error) {
     console.error('Error querying LLM:', error);
-    return 'There was an error connecting to the LLM backend.';
+    return { error: 'There was an error connecting to the LLM backend.' };
   }
 });
