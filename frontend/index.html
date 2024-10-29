@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Chat</title>
+  <style>
+    body { font-family: Arial, sans-serif; display: flex; flex-direction: column; height: 100vh; margin: 0; }
+    #chat-container { flex-grow: 1; padding: 10px; overflow-y: auto; }
+    .message { margin-bottom: 10px; }
+    #chat-form { display: flex; padding: 10px; border-top: 1px solid #ddd; }
+    #user-input { flex-grow: 1; padding: 8px; }
+    button { padding: 8px; }
+  </style>
+</head>
+<body>
+  <div id="chat-container"></div>
+  <form id="chat-form">
+    <input type="text" id="user-input" placeholder="Type your message" required>
+    <button type="submit">Send</button>
+  </form>
+  <script src="renderer.js"></script>
+</body>
+</html>

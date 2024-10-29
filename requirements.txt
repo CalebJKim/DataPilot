@@ -17,3 +17,5 @@ kaggle
 kagglehub
 xgboost
 google-generativeai
+flask
+flask-cors
