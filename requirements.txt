@@ -1,5 +1,7 @@
+setuptools
 apache-airflow
 openai
+wheel
 pandas
 matplotlib
 sqlalchemy
@@ -13,9 +15,9 @@ google-generativeai
 python-dotenv
 pyyaml
 seaborn
+scikit-learn
 kaggle
 kagglehub
 xgboost
-google-generativeai
 flask
 flask-cors
