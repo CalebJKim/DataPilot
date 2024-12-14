@@ -5,6 +5,7 @@ import sqlite3
 import pandas as pd
 import re
 import yaml
+import logging 
 import time  # Import time module for tracking
 
 class LLM:
@@ -34,23 +35,33 @@ class LLM:
 
         sql_generation_prompt = self.prompts['system_prompts']['sql_generation_agent']
         formatted_prompt = sql_generation_prompt + natural_language_prompt
-        print("Formatted prompt prepared.")
+        logging.info("Formatted prompt prepared.")
 
         # Invoke the model
         invoke_start = time.time()
-        response = self.invoke(formatted_prompt)
-        invoke_end = time.time()
-        print(f"Time for invoke in SQL generation: {invoke_end - invoke_start:.4f} seconds")
+        try:
+            response = self.invoke(formatted_prompt)
+            invoke_end = time.time()
+            logging.info(f"Time for invoke in SQL generation: {invoke_end - invoke_start:.4f} seconds")
+        except Exception as e:
+            logging.error(f"Error invoking the model: {e}")
+            return ""
 
         # Clean SQL query
         clean_start = time.time()
-        formatted_response = self.clean_sql_query(response)
-        clean_end = time.time()
-        print(f"Time to clean SQL query: {clean_end - clean_start:.4f} seconds")
+        try:
+            formatted_response = self.clean_sql_query(response)
+            clean_end = time.time()
+            logging.info(f"Time to clean SQL query: {clean_end - clean_start:.4f} seconds")
+        except Exception as e:
+            logging.error(f"Error cleaning SQL query: {e}")
+            return ""
 
         total_time = time.time() - start_time
-        print(f"Total time for SQL generation: {total_time:.4f} seconds")
+        logging.info(f"Total time for SQL generation: {total_time:.4f} seconds")
+
         return formatted_response
+
     
     def execute_sql_query(self, sql_query: str, csv_file: str):
         execution_start = time.time()
