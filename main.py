@@ -1,29 +1,17 @@
 import pandas as pd
-import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
 import warnings
-import sklearn
 from llm import *
+from autogen import ConversableAgent
+from prompts import Prompts
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
-from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
 from datetime import datetime
-
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import average_precision_score
-
-from xgboost import XGBClassifier
-from xgboost import plot_importance
-from sklearn.preprocessing import LabelEncoder
-
-import kagglehub
 
 project_dir = os.getcwd()
 
 import os
-from kaggle.api.kaggle_api_extended import KaggleApi
 import pandas as pd
 import sqlite3
 import logging
@@ -31,34 +19,11 @@ import logging
 # Set up logging
 logging.basicConfig(filename="pipeline.log", level=logging.INFO)
 
-def fetch_data():
-    # Initialize Kaggle API
-    api = KaggleApi()
-    api.authenticate()
-
-    # Define dataset and download path
-    dataset = "ealaxi/paysim1"
-    download_path = "./data"
-
-    # Download dataset
-    if not os.path.exists(download_path):
-        os.makedirs(download_path)
-    api.dataset_download_files(dataset, path=download_path, unzip=True)
-
-    logging.info("Dataset downloaded and unzipped.")
-
-def process_data():
-    # List all files in the data folder
-    data_folder = './data'
-    files = os.listdir(data_folder)
-    
-    # Check if there are any files and read the first one
-    if files:
-        first_file = files[0]
-        df = pd.read_csv(os.path.join(data_folder, first_file))
-        logging.info(f"Loaded dataset from {first_file} with {df.shape[0]} rows.")
-    else:
-        logging.warning("No files found in the data folder.")
+def fetch_and_process_data():
+    # Load the carsalesdata.csv file
+    data_path = os.path.join(project_dir, 'data/carsalesdata.csv')
+    df = pd.read_csv(data_path)
+    logging.info(f"Loaded carsalesdata.csv with {df.shape[0]} rows.")
 
     # Simulate data cleaning
     df.dropna(inplace=True)  # Example cleaning step
@@ -70,37 +35,14 @@ def process_data():
     conn.close()
     logging.info("Data saved to SQLite database.")
 
-# Simulate the data ingestion process
-fetch_data()
-process_data()
+def main():
+    api_key = None #os.environ.get("OPENAI_API_KEY")
+    llm_config = {"config_list": [{"model": "gpt-4o-mini", "api_key": api_key}]}
+    glide_analysis_agent = ConversableAgent("glide_analysis_agent", 
+                                        system_message=Prompts.database_EDA_agent_prompt, 
+                                        llm_config=llm_config)
+    glide_analysis_agent.register_for_llm(name="glide_analysis_agent", description="Analyzes how the pilot maintains best glide speed.")(glide_analysis_agent)
+    glide_analysis_agent.register_for_execution(name="glide_analysis_agent")(glide_analysis_agent)
 
-# Apache Airflow DAG simulation
-
-
-def airflow_fetch_data():
-    fetch_data()
-
-def airflow_process_data():
-    process_data()
-
-default_args = {
-    'owner': 'airflow',
-    'start_date': datetime(2023, 1, 1),
-    'retries': 1,
-}
-
-dag = DAG('data_ingestion_dag', default_args=default_args, schedule_interval='@daily')
-
-fetch_data_task = PythonOperator(
-    task_id='fetch_data',
-    python_callable=airflow_fetch_data,
-    dag=dag,
-)
-
-process_data_task = PythonOperator(
-    task_id='process_data',
-    python_callable=airflow_process_data,
-    dag=dag,
-)
-
-fetch_data_task >> process_data_task  # Set task dependencies
+if __name__ == "__main__":
+    main()

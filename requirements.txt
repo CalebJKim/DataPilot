@@ -21,3 +21,4 @@ kagglehub
 xgboost
 flask
 flask-cors
+autogen
