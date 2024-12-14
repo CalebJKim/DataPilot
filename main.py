@@ -38,11 +38,11 @@ def fetch_and_process_data():
 def main():
     api_key = None #os.environ.get("OPENAI_API_KEY")
     llm_config = {"config_list": [{"model": "gpt-4o-mini", "api_key": api_key}]}
-    glide_analysis_agent = ConversableAgent("glide_analysis_agent", 
+    db_eda_agent = ConversableAgent("db_eda_agent", 
                                         system_message=Prompts.database_EDA_agent_prompt, 
                                         llm_config=llm_config)
-    glide_analysis_agent.register_for_llm(name="glide_analysis_agent", description="Analyzes how the pilot maintains best glide speed.")(glide_analysis_agent)
-    glide_analysis_agent.register_for_execution(name="glide_analysis_agent")(glide_analysis_agent)
+    db_eda_agent.register_for_llm(name="db_eda_agent", description="Performs exploratory data analysis on the database and return useful information.")(db_eda_agent)
+    db_eda_agent.register_for_execution(name="db_eda_agent")(db_eda_agent)
 
 if __name__ == "__main__":
     main()
