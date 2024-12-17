@@ -78,6 +78,7 @@ def analyze_data(data: Any, prompt: str) -> None:
     print(f"Data: {data}")
 
 def main():
+    # Creating Agents
     api_key = None #os.environ.get("OPENAI_API_KEY")
     llm_config = {"config_list": [{"model": "gpt-4o-mini", "api_key": api_key}]}
     db_eda_agent = ConversableAgent("db_eda_agent", 
@@ -85,6 +86,11 @@ def main():
                                         llm_config=llm_config)
     db_eda_agent.register_for_llm(name="db_eda_agent", description="Performs exploratory data analysis on the database and return useful information.")(db_eda_agent)
     db_eda_agent.register_for_execution(name="db_eda_agent")(db_eda_agent)
+
+    # Agentic Workflow
+    fetch_and_process_data() # At this point, data should be in a SQLite DB
+    eda_response = db_eda_agent.run({"query": "Analyze the 'data_table' table in the SQLite database and provide useful insights.", "db_path": "data.db"})
+    
 
 if __name__ == "__main__":
     main()
