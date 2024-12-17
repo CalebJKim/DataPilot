@@ -15,6 +15,7 @@ from datetime import datetime
 import os
 import sqlite3
 import logging
+import visualization_executor
 
 # Set up logging
 logging.basicConfig(filename="pipeline.log", level=logging.INFO)
@@ -105,6 +106,18 @@ def main(user_query):
     db_eda_agent.register_for_llm(name="db_eda_agent", description="Performs exploratory data analysis on the database and return useful information.")
     db_eda_agent.register_for_execution(name="db_eda_agent")
 
+    data_analyst_agent = ConversableAgent("data_analyst_agent", 
+                                    system_message=Prompts.data_analyst_agent_prompt, 
+                                    llm_config=llm_config)
+    data_analyst_agent.register_for_llm(name="data_analyst_agent", description="Performs data analysis on the SQL query results and web sentiment data and return useful information.")
+    data_analyst_agent.register_for_execution(name="data_analyst_agent")
+
+    visualization_agent = ConversableAgent("visualization_agent", 
+                                    system_message=Prompts.visualization_agent_prompt, 
+                                    llm_config=llm_config)
+    visualization_agent.register_for_llm(name="visualization_agent", description="Performs data visualization on the SQL query results and web sentiment data and return useful information.")
+    visualization_agent.register_for_execution(name="visualization_agent")
+
     # Agentic Workflow
     csv_path = 'data/raw/carsalesdata.csv'
     db_path = 'data/sqlite_db/data.db'
@@ -119,6 +132,50 @@ def main(user_query):
         ]
     )
     print("Agent Response:\n", eda_response)
+
+    #Add logic for SQL generation / execution based on EDA response
+    sql_result = pd.DataFrame()
+
+    #Add call to web scraper agent
+    web_sentiments = []
+
+
+    #(TODO: adjust analysis/visualization agents to take correct types, assuming df and array right now.)
+    #Logic for data analyst agent
+    analysis_response = data_analyst_agent.generate_reply(
+        messages=[
+            {
+                "role": "user",
+                "content": f"Analyze the SQL query results and web sentiments based on this query: {user_query}. "
+                        f"SQL Results: {sql_result.to_string(index=False)}\n"
+                        f"Web Sentiments: {web_sentiments}\n"
+            }
+        ]
+    )
+    print("Data Analyst Agent Response:\n", analysis_response)
+
+    #Logic for visualization agent 
+    visualization_code = visualization_agent.generate_reply(
+        messages=[
+            {
+                "role": "user",
+                "content": f"Generate visualization code for the SQL query results and web sentiments based on this query: {user_query}. "
+                           f"SQL Results: {sql_result.to_string(index=False)}\n"
+                           f"Web Sentiments: {web_sentiments}\n"
+            }
+        ]
+    )
+
+    # Execute the generated visualization code
+    visualizations = visualization_executor.execute_visualization_code(visualization_code, sql_result, web_sentiments)
+    
+    # Return both analysis and visualizations
+    return {
+        "analysis": analysis_response,
+        "visualizations": visualizations
+    }
+
+
 
 if __name__ == "__main__":
     assert len(sys.argv) > 1, "Please ensure you include a query for some restaurant when executing main."

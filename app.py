@@ -3,11 +3,31 @@ from flask_cors import CORS
 from llm import LLM
 import traceback
 import time  # Import time module for tracking
+from main import main
 
 app = Flask(__name__)
 CORS(app)
 llm = LLM()
 csv_file_path = "datasets/samples.csv"
+
+@app.route("/api/generate-report", methods=["POST"])
+def generate_report():
+    try:
+        data = request.get_json()
+        user_query = data.get("query")
+
+        if not user_query:
+            return jsonify({"error": "No query provided"}), 400
+
+        # Call the main function to process the query and generate the report
+        report = main(user_query)
+
+        return jsonify(report)
+    except Exception as e:
+        error_trace = traceback.format_exc()
+        print("Error in generate_report:", error_trace)
+        return jsonify({"error": str(e), "trace": error_trace}), 500
+
 
 @app.route("/api/llm-query", methods=["POST"])
 def query_llm():
