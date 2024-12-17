@@ -1,0 +1,61 @@
+Top 12 Used Car KPIs and Benchmarks
+Cox Automotive analyzed data from thousands of dealers, including top performers, to identify the Key Performance Indicators (KPIs) that matter most and best-in-class benchmarks. See how your dealership compares.
+
+1. USED-TO-NEW RATIO
+Good: 1:1
+Great: 1.25:1
+Used retail unit volume equaling or surpassing new retail volume is a key indicator of successful used-vehicle departments, assuming new vehicle volume goals are met. A strong used-to-new ratio relies on acquisition, reconditioning, and retailing skills. The profitability gained helps reduce pressure on the new-vehicle department.
+
+2. PRICE TO MARKET / MARKET DAYS SUPPLY
+Top performers balance vehicle desirability with pricing strategy. Data determines when to "go for the gross" and when aggressive pricing is necessary due to shrinking profit windows. It is also foundational in inventory acquisition and appraisals.
+
+3. INVENTORY TURN RATE
+Good: 12
+Great: 16
+Inventory turn rate compares in-stock inventory to monthly sales. Top performers turn inventory every 20 days. Fast turns require age intolerance, cross-departmental commitment, and operational efficiency. Faster turns maximize high-gross opportunities and drive overall profits.
+
+4. MECHANICAL AND COSMETIC RECONDITIONING TIME
+Benchmark: 3 days
+Top-performing dealerships address reconditioning delays by dedicating technicians, extending hours, and leveraging subcontractors. Speed is critical.
+
+5. PACKS
+Good: Max 1% of vehicle value
+Great: $0
+High performers eliminate or minimize packs, recognizing their drag on acquisition and appraisal processes. Packs are outdated in today’s digital market.
+
+6. REDUCED RECONDITIONING MARKUP FOR OLDER VEHICLES
+Top dealers reduce reconditioning rates for older vehicles (5+ years), which are often desirable but carry higher costs. Lower recon rates support acquisition.
+
+7. IMMEDIATE WHOLESALE VOLUME
+Benchmark: Under 33%
+Top dealers differentiate between immediate wholesale (vehicles never retailed) and aged wholesale. They focus on retaining trades, reducing recon costs for older vehicles, and avoiding unnecessary packs.
+
+8. IMMEDIATE WHOLESALE PROFIT/LOSS PER VEHICLE
+Benchmark: +/- $150
+A small profit or loss per wholesale vehicle indicates accurate appraisals, excluding inventory or pack adjustments. This metric ties closely to the appraisal-to-trade ratio.
+
+9. AGED WHOLESALE LOSS PER VEHICLE
+Benchmark: Up to 5% of vehicle cost
+Aged wholesale losses occur when vehicles fail to retail. Top dealers set a KPI for losses on these vehicles and identify process improvements to minimize future occurrences.
+
+10. APPRAISAL-TO-TRADE RATIO
+Benchmark: 50%+
+This ratio measures the percentage of appraised vehicles that result in trades. Key factors influencing lower ratios include:
+
+Packs
+High recon charges
+Aged used inventory
+Appraising vehicles earlier in the sales process often lowers this ratio due to increased appraisals.
+
+11. GROI (Gross Return on Investment)
+Good: 120%+
+Great: 160%+
+Formula:
+Gross as % of Sale * Turn Rate 
+
+For example:
+
+A $10,000 vehicle with a $1,000 profit (10% gross) sold in one month has a GROI of 120.
+A GROI of 120+ ensures financial viability, and this metric can be applied to an entire inventory.
+12. COST TO MARKET
+Top-performing dealers minimize Cost to Market, which compares a vehicle's retail value to the total investment, including acquisition, recon, transport, and packs. Lower costs enable aggressive inventory acquisition and higher ROI.

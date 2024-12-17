@@ -43,3 +43,38 @@ INFO:root:Loaded carsalesdata.csv with 17662 rows.
 INFO:root:Data cleaned. Dropped NA values.
 INFO:root:Data saved to SQLite database.
 INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:chromadb.telemetry.product.posthog:Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+INFO:chromadb.telemetry.product.posthog:Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+INFO:chromadb.telemetry.product.posthog:Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+INFO:chromadb.telemetry.product.posthog:Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:chromadb.telemetry.product.posthog:Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+INFO:chromadb.telemetry.product.posthog:Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

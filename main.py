@@ -3,10 +3,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import warnings
 import sys
+import os
 from llm import *
 from autogen import ConversableAgent
+from autogen import AssistantAgent
+from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
 from prompts import Prompts
 from typing import Dict, Any
+
 #from dataframe_analyzer import is_data_relevant, is_sample_size_sufficient
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -100,23 +104,79 @@ def main(user_query):
     api_key = os.environ.get("OPENAI_API_KEY")
     #llm = LLM(model_name="gemini-1.5-pro-latest")
     llm_config = {"config_list": [{"model": "gpt-4o-mini", "api_key": api_key}]}
+
+
+    # agent 0a in diagram
     db_eda_agent = ConversableAgent("db_eda_agent", 
                                     system_message=Prompts.database_EDA_agent_prompt, 
                                     llm_config=llm_config)
     db_eda_agent.register_for_llm(name="db_eda_agent", description="Performs exploratory data analysis on the database and return useful information.")
     db_eda_agent.register_for_execution(name="db_eda_agent")
 
+    # agent 0b in diagram
+    metric_agent = ConversableAgent("metric_agent", 
+                                    system_message=Prompts.metric_agent_prompt, 
+                                    llm_config=llm_config)
+    metric_agent.register_for_llm(name="metric_agent", description="Combines EDA with dealership-specific frameworks to provide metrics to look at")
+    metric_agent.register_for_execution(name="metric_agent")
+    
+
+   # RAG Agent
+    
+
+    # Get all file paths in the 'Frameworks' directory; to setup RAG
+    frameworks_dir = 'Frameworks'
+    docs_paths = [os.path.join(frameworks_dir, file) for file in os.listdir(frameworks_dir) if os.path.isfile(os.path.join(frameworks_dir, file))]
+
+    # retrieve_config = {"config_list": [{"model": "gpt-4o-mini", "api_key": api_key}]}
+    
+    # # agent 0b with rag
+    # ragproxyagent = RetrieveUserProxyAgent(
+    #     #         name="ragproxyagent",
+    #     system_message=Prompts.RAG_agent_prompt,
+    #     # retrieve_config = {
+    #     #     "task":"qa",
+    #     #     "docs_path":docs_paths
+    #     # })
+    #     name="RAG Proxy Agent",
+    #     is_termination_msg=None,  # Assuming termination_msg is defined elsewhere
+    #     # system_message="Running RAG agent who has extra content retrieval power for solving difficult problems.",
+    
+    #     human_input_mode="NEVER",
+    #     max_consecutive_auto_reply=3,
+    #     retrieve_config={
+    #         "task": "qa",
+    #         "model" : "gpt-4o-mini",
+    #         "docs_path": docs_paths
+    #     },
+    #     code_execution_config=False
+    # )
+    
+    # ragproxyagent.register_for_llm(name="ragproxyagent")
+    # ragproxyagent.register_for_execution(name="ragproxyagent")
+
+
+
+
+    # agent 3 in diagram
     data_analyst_agent = ConversableAgent("data_analyst_agent", 
                                     system_message=Prompts.data_analyst_agent_prompt, 
                                     llm_config=llm_config)
     data_analyst_agent.register_for_llm(name="data_analyst_agent", description="Performs data analysis on the SQL query results and web sentiment data and return useful information.")
-    data_analyst_agent.register_for_execution(name="data_analyst_agent")
+    # data_analyst_agent.register_for_execution(name="data_analyst_agent")
 
+    
+
+
+
+    # agent 4 in diagram
     visualization_agent = ConversableAgent("visualization_agent", 
                                     system_message=Prompts.visualization_agent_prompt, 
                                     llm_config=llm_config)
     visualization_agent.register_for_llm(name="visualization_agent", description="Performs data visualization on the SQL query results and web sentiment data and return useful information.")
     visualization_agent.register_for_execution(name="visualization_agent")
+
+ 
 
     # Agentic Workflow
     csv_path = 'data/raw/carsalesdata.csv'
@@ -132,6 +192,46 @@ def main(user_query):
         ]
     )
     print("Agent Response:\n", eda_response)
+
+
+    # Using EDA response, use RAG Agent to find metrics that could be interesting to look at
+
+    print(f"The metric agent is now analyzing the previous EDA response")
+
+    # metric_response = ragproxyagent.generate_reply(
+    #     messages=[
+    #         {"role": "user", "content": f"Analyze the response given here, and pay attention to the schema of the database: {eda_response}. Using your knowledge from documents passed in, return 7-8 metrics that would be worthwhile to look more into. Provide explanations for each one."}
+    #     ]
+    # )
+
+
+    # Function to read all .txt files in the frameworks folder and return their contents as strings
+    def read_frameworks_as_strings(directory_path):
+        frameworks_content = {}
+        for filename in os.listdir(directory_path):
+            if filename.endswith('.txt'):
+                file_path = os.path.join(directory_path, filename)
+                with open(file_path, 'r') as file:
+                    content = file.read()
+                    frameworks_content[filename] = content
+        return frameworks_content
+
+    # Path to the frameworks folder
+    frameworks_folder_path = 'Frameworks'
+
+    # Read the .txt files and store their contents
+    frameworks_data = read_frameworks_as_strings(frameworks_folder_path)
+
+    # Convert the contents into f-strings for easy parsing
+    frameworks_fstrings = {name: f"{content}" for name, content in frameworks_data.items()}
+    metric_response = metric_agent.generate_reply(
+        messages=[
+            {"role": "user", "content": f"Based on this query: {eda_response}, and these sources: {frameworks_fstrings}, analyze potential metrics that would be useful for {user_query}"}
+        ]
+    )
+
+    print("Metric/RAG Response", metric_response)
+
 
     #Add logic for SQL generation / execution based on EDA response
     sql_result = pd.DataFrame()
