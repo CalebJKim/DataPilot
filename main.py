@@ -11,15 +11,14 @@ from dataframe_analyzer import is_data_relevant, is_sample_size_sufficient
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 from datetime import datetime
 
-project_dir = os.getcwd()
-
 import os
-import pandas as pd
 import sqlite3
 import logging
 
 # Set up logging
 logging.basicConfig(filename="pipeline.log", level=logging.INFO)
+
+project_dir = os.getcwd()
 
 def fetch_and_process_data():
     # Load the carsalesdata.csv file
@@ -41,17 +40,15 @@ def is_data_relevant(data: Any) -> bool:
     """
     Placeholder function to check if the data is relevant.
     """
-    # Implement your logic to determine data relevance
-    return bool(data)  # Example: Returns True if data is not empty
+    return bool(data) and not data.empty
 
 def is_sample_size_sufficient(data: Any) -> bool:
     """
     Placeholder function to check if the sample size is sufficient.
     """
-    # Implement your logic to check sample size
-    return len(data) >= 10  # Example: Sample size is sufficient if >= 10 rows
+    return len(data) >= 10
 
-def evaluate_query_results(data: Any, original_prompt: str, sql_generator_agent: ConversableAgent) -> None:
+def evaluate_query_results(data: Any, original_prompt: str, sql_generator_agent: ConversableAgent, llm: LLM) -> None:
     """
     Evaluates query results and determines next actions based on data quality.
 
@@ -60,30 +57,42 @@ def evaluate_query_results(data: Any, original_prompt: str, sql_generator_agent:
     """
     if is_data_relevant(data) and is_sample_size_sufficient(data):
         # Data meets quality criteria - send to analyst
+        logging.info("Data is relevant and sufficient. Proceeding to analysis.")
         analyze_data(data, original_prompt)
     else:
         # Data does not meet quality criteria - request new SQL query from Agent 1
+        logging.warning("Data is not relevant or insufficient. Reinvoking Agent 1 for a new SQL query.")
         new_prompt = f"""The previous SQL query did not yield relevant or sufficient results.
         Original request: "{original_prompt}"
         Please generate a new SQL query with refined conditions to improve relevance or increase the sample size."""
-        sql_generator_agent.initiate_chat(new_prompt)
+        
+        # Generate a new SQL query using Agent 1
+        new_query = llm.generate_sql_query(new_prompt)
+        logging.info(f"Generated new SQL query: {new_query}")
+
+        # Execute the new SQL query using Agent 2
+        csv_file_path = "datasets/samples.csv"
+        new_data = llm.execute_sql_query(new_query, csv_file_path)
+
+        # Re-evaluate the new results
+        evaluate_query_results(new_data, original_prompt, sql_generator_agent, llm)
 
 def analyze_data(data: Any, prompt: str) -> None:
     """
     Function call to data analyst with validated data and original prompt.
     """
-    # Simulate sending data to a data analyst
+    logging.info("Sending data to data analyst for further analysis.")
     print("Data is relevant and sufficient. Sending to data analyst.")
     print(f"Prompt: {prompt}")
     print(f"Data: {data}")
 
 def main():
-    # Creating Agents
-    api_key = None #os.environ.get("OPENAI_API_KEY")
+    api_key = None  # os.environ.get("OPENAI_API_KEY")
+    llm = LLM(model_name="gemini-1.5-pro-latest")
     llm_config = {"config_list": [{"model": "gpt-4o-mini", "api_key": api_key}]}
     db_eda_agent = ConversableAgent("db_eda_agent", 
-                                        system_message=Prompts.database_EDA_agent_prompt, 
-                                        llm_config=llm_config)
+                                    system_message=Prompts.database_EDA_agent_prompt, 
+                                    llm_config=llm_config)
     db_eda_agent.register_for_llm(name="db_eda_agent", description="Performs exploratory data analysis on the database and return useful information.")(db_eda_agent)
     db_eda_agent.register_for_execution(name="db_eda_agent")(db_eda_agent)
 
