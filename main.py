@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import warnings
+import sys
 from llm import *
 from autogen import ConversableAgent
 from prompts import Prompts
@@ -99,7 +100,7 @@ def main():
     # Agentic Workflow
     fetch_and_process_data() # At this point, data should be in a SQLite DB
     eda_response = db_eda_agent.run({"query": "Analyze the 'data_table' table in the SQLite database and provide useful insights.", "db_path": "data.db"})
-    
 
 if __name__ == "__main__":
-    main()
+    assert len(sys.argv) > 1, "Please ensure you include a query for some restaurant when executing main."
+    main(sys.argv[1])
