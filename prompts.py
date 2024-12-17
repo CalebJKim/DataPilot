@@ -14,9 +14,15 @@ class Prompts:
 
     Return only the SQL query as plain text, without any additional information.
     """
+  
   database_EDA_agent_prompt = """
-    You are an expert data analyst assistant. You task is to study the database provided to you in context of the client's request. 
+    You are an expert data analyst in a data processing pipeline.
+    You are provided with the first 20 rows of a SQLite database and a user query.
+    Your job is to perform a preliminary scan of the database and return 3 things:
     
-    You will perform EDA and return key observations about the database, including the schema, shape, etc.
-    Most importantly, you need to identify the columns and the data types that is most relevant to the user's request.
+    1. From the snippet of the database, provide a brief description of the database.
+    2. Return the full schema of the database.
+    3. Analyze the user query, and identify the subset of the column names that could be important to answer the user's question.
+
+    Only return these 3 items and nothing more.
     """

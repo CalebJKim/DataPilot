@@ -7,7 +7,7 @@ from llm import *
 from autogen import ConversableAgent
 from prompts import Prompts
 from typing import Dict, Any
-from dataframe_analyzer import is_data_relevant, is_sample_size_sufficient
+#from dataframe_analyzer import is_data_relevant, is_sample_size_sufficient
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 from datetime import datetime
@@ -21,10 +21,18 @@ logging.basicConfig(filename="pipeline.log", level=logging.INFO)
 
 project_dir = os.getcwd()
 
-def fetch_and_process_data():
+def query_database(db_path: str, query: str) -> pd.DataFrame:
+    """
+    Executes an SQL query on the given SQLite database and returns the results as a DataFrame.
+    """
+    conn = sqlite3.connect(db_path)
+    result = pd.read_sql_query(query, conn)
+    conn.close()
+    return result
+
+def fetch_and_process_data(csv_path):
     # Load the carsalesdata.csv file
-    data_path = os.path.join(project_dir, 'data/carsalesdata.csv')
-    df = pd.read_csv(data_path)
+    df = pd.read_csv(csv_path)
     logging.info(f"Loaded carsalesdata.csv with {df.shape[0]} rows.")
 
     # Simulate data cleaning
@@ -32,7 +40,7 @@ def fetch_and_process_data():
     logging.info("Data cleaned. Dropped NA values.")
 
     # Save to SQLite database
-    conn = sqlite3.connect('data_pipeline.db')
+    conn = sqlite3.connect('data/sqlite_db/data.db')
     df.to_sql('transactions', conn, if_exists='replace', index=False)
     conn.close()
     logging.info("Data saved to SQLite database.")
@@ -87,19 +95,30 @@ def analyze_data(data: Any, prompt: str) -> None:
     print(f"Prompt: {prompt}")
     print(f"Data: {data}")
 
-def main():
-    api_key = None  # os.environ.get("OPENAI_API_KEY")
-    llm = LLM(model_name="gemini-1.5-pro-latest")
+def main(user_query):
+    api_key = os.environ.get("OPENAI_API_KEY")
+    #llm = LLM(model_name="gemini-1.5-pro-latest")
     llm_config = {"config_list": [{"model": "gpt-4o-mini", "api_key": api_key}]}
     db_eda_agent = ConversableAgent("db_eda_agent", 
                                     system_message=Prompts.database_EDA_agent_prompt, 
                                     llm_config=llm_config)
-    db_eda_agent.register_for_llm(name="db_eda_agent", description="Performs exploratory data analysis on the database and return useful information.")(db_eda_agent)
-    db_eda_agent.register_for_execution(name="db_eda_agent")(db_eda_agent)
+    db_eda_agent.register_for_llm(name="db_eda_agent", description="Performs exploratory data analysis on the database and return useful information.")
+    db_eda_agent.register_for_execution(name="db_eda_agent")
 
     # Agentic Workflow
-    fetch_and_process_data() # At this point, data should be in a SQLite DB
-    eda_response = db_eda_agent.run({"query": "Analyze the 'data_table' table in the SQLite database and provide useful insights.", "db_path": "data.db"})
+    csv_path = 'data/raw/carsalesdata.csv'
+    db_path = 'data/sqlite_db/data.db'
+    fetch_and_process_data(csv_path)
+
+    data_sample = query_database(db_path, "SELECT * FROM transactions LIMIT 20;").to_string(index=False)
+
+    print(f"EDA Agent will analyze {db_path} in context of {user_query}")
+    eda_response = db_eda_agent.generate_reply(
+        messages=[
+            {"role": "user", "content": f"Analyze the database at {db_path} based on this query: {user_query}. Here is a sample of the data:\n{data_sample}\n"}
+        ]
+    )
+    print("Agent Response:\n", eda_response)
 
 if __name__ == "__main__":
     assert len(sys.argv) > 1, "Please ensure you include a query for some restaurant when executing main."
