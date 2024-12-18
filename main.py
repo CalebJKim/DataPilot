@@ -102,7 +102,7 @@ def analyze_data(data: Any, prompt: str) -> None:
 
 def main(user_query):
     api_key = os.environ.get("OPENAI_API_KEY")
-    #llm = LLM(model_name="gemini-1.5-pro-latest")
+    llm = LLM()
     llm_config = {"config_list": [{"model": "gpt-4o-mini", "api_key": api_key}]}
 
 
@@ -206,35 +206,47 @@ def main(user_query):
 
 
     # Function to read all .txt files in the frameworks folder and return their contents as strings
-    def read_frameworks_as_strings(directory_path):
-        frameworks_content = {}
-        for filename in os.listdir(directory_path):
-            if filename.endswith('.txt'):
-                file_path = os.path.join(directory_path, filename)
-                with open(file_path, 'r') as file:
-                    content = file.read()
-                    frameworks_content[filename] = content
-        return frameworks_content
+    # def read_frameworks_as_strings(directory_path):
+    #     frameworks_content = {}
+    #     for filename in os.listdir(directory_path):
+    #         if filename.endswith('.txt'):
+    #             file_path = os.path.join(directory_path, filename)
+    #             with open(file_path, 'r') as file:
+    #                 content = file.read()
+    #                 frameworks_content[filename] = content
+    #     return frameworks_content
 
-    # Path to the frameworks folder
-    frameworks_folder_path = 'Frameworks'
+    # # Path to the frameworks folder
+    # frameworks_folder_path = 'Frameworks'
 
-    # Read the .txt files and store their contents
-    frameworks_data = read_frameworks_as_strings(frameworks_folder_path)
+    # # Read the .txt files and store their contents
+    # frameworks_data = read_frameworks_as_strings(frameworks_folder_path)
 
-    # Convert the contents into f-strings for easy parsing
-    frameworks_fstrings = {name: f"{content}" for name, content in frameworks_data.items()}
-    metric_response = metric_agent.generate_reply(
-        messages=[
-            {"role": "user", "content": f"Based on this query: {eda_response}, and these sources: {frameworks_fstrings}, analyze potential metrics that would be useful for {user_query}"}
-        ]
-    )
+    # # Convert the contents into f-strings for easy parsing
+    # frameworks_fstrings = {name: f"{content}" for name, content in frameworks_data.items()}
+    # metric_response = metric_agent.generate_reply(
+    #     messages=[
+    #         {"role": "user", "content": f"Based on this query: {eda_response}, and these sources: {frameworks_fstrings}, analyze potential metrics that would be useful for {user_query}"}
+    #     ]
+    # )
 
-    print("Metric/RAG Response", metric_response)
+    # print("Metric/RAG Response", metric_response)
 
 
     #Add logic for SQL generation / execution based on EDA response
-    sql_result = pd.DataFrame()
+    sql_query = llm.generate_sql_query(eda_response, user_query)
+
+    if sql_query:
+        print(f"SQL Query Generated: \n {sql_query}")
+        sql_result = llm.execute_sql_query(sql_query, csv_path)
+
+        if isinstance(sql_result, pd.DataFrame):
+            print(f"SQL Query executed successfully: {sql_result}")
+        else:
+            print("SQL Query execution failed.")
+    else:
+        print("SQL Query generation failed.")
+
 
     #Add call to web scraper agent
     web_sentiments = []
@@ -255,6 +267,7 @@ def main(user_query):
     print("Data Analyst Agent Response:\n", analysis_response)
 
     #Logic for visualization agent 
+    print(f"Visualization Agent now generating code...")
     visualization_code = visualization_agent.generate_reply(
         messages=[
             {
@@ -278,5 +291,5 @@ def main(user_query):
 
 
 if __name__ == "__main__":
-    assert len(sys.argv) > 1, "Please ensure you include a query for some restaurant when executing main."
+    assert len(sys.argv) > 1, "Please ensure you include a query for some car when executing main."
     main(sys.argv[1])

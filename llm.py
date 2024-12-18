@@ -7,6 +7,7 @@ import re
 import yaml
 import logging 
 import time  # Import time module for tracking
+from prompts import Prompts
 
 class LLM:
     def __init__(self, model_name="gemini-1.5-pro-latest"):
@@ -19,8 +20,8 @@ class LLM:
         genai.configure(api_key=self.api_key)
         self.model = genai.GenerativeModel(model_name)
 
-        with open('prompts.yaml', 'r') as file:
-            self.prompts = yaml.safe_load(file)
+        # Use Prompts class instead of loading from YAML
+        self.prompts = Prompts()
 
     def invoke(self, prompt: str) -> str:
         invoke_start = time.time()
@@ -30,11 +31,13 @@ class LLM:
         print(f"Time to invoke model and generate response: {invoke_end - invoke_start:.4f} seconds")
         return response.text
 
-    def generate_sql_query(self, natural_language_prompt: str) -> str:
+    def generate_sql_query(self, natural_language_prompt: str, original_prompt: str) -> str:
         start_time = time.time()
 
-        sql_generation_prompt = self.prompts['system_prompts']['sql_generation_agent']
-        formatted_prompt = sql_generation_prompt + natural_language_prompt
+        # Access the prompt directly from the Prompts class
+        sql_generation_prompt = self.prompts.sql_generation_agent_prompt
+        # Include the original prompt for context
+        formatted_prompt = f"{sql_generation_prompt}\nOriginal Prompt: {original_prompt}\n{natural_language_prompt}"
         logging.info("Formatted prompt prepared.")
 
         # Invoke the model
@@ -83,7 +86,7 @@ class LLM:
                 return results
             except Exception as e:
                 print(f"Query Execution Error: {e}")
-                return f"Query Execution Error: {e}"
+                return pd.DataFrame()  # Return an empty DataFrame
         execution_end = time.time()
         print(f"Total time for SQL query execution: {execution_end - execution_start:.4f} seconds")
     
@@ -121,7 +124,7 @@ if __name__ == "__main__":
 
     # Generate SQL Query
     query_generation_start = time.time()
-    query = llm.generate_sql_query(raw_query)
+    query = llm.generate_sql_query(raw_query, raw_query)
     query_generation_end = time.time()
     print(f"Time to generate SQL query: {query_generation_end - query_generation_start:.4f} seconds")
 
