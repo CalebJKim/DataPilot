@@ -3,4 +3,7 @@ venv
 __pycache__
 frontend/node_modules
 frontend/package-lock.json
+data/raw
+.cache
+data
 datasets

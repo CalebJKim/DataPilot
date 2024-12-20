@@ -10,6 +10,7 @@ from autogen import AssistantAgent
 from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
 from prompts import Prompts
 from typing import Dict, Any
+from webagent import summarize_online_and_review_data
 # from webAgent import main as web_agent_main
 
 #from dataframe_analyzer import is_data_relevant, is_sample_size_sufficient
@@ -63,34 +64,34 @@ def is_sample_size_sufficient(data: Any) -> bool:
     """
     return len(data) >= 10
 
-def evaluate_query_results(data: Any, original_prompt: str, sql_generator_agent: ConversableAgent, llm: LLM) -> None:
-    """
-    Evaluates query results and determines next actions based on data quality.
+# def evaluate_query_results(data: Any, original_prompt: str, sql_generator_agent: ConversableAgent, llm: LLM) -> None:
+#     """
+#     Evaluates query results and determines next actions based on data quality.
 
-    - If data is relevant and useful, calls the data analyst function with the data and original prompt.
-    - If data is not relevant or the sample size is too small, prompts Agent 1 for a new SQL query.
-    """
-    if is_data_relevant(data) and is_sample_size_sufficient(data):
-        # Data meets quality criteria - send to analyst
-        logging.info("Data is relevant and sufficient. Proceeding to analysis.")
-        analyze_data(data, original_prompt)
-    else:
-        # Data does not meet quality criteria - request new SQL query from Agent 1
-        logging.warning("Data is not relevant or insufficient. Reinvoking Agent 1 for a new SQL query.")
-        new_prompt = f"""The previous SQL query did not yield relevant or sufficient results.
-        Original request: "{original_prompt}"
-        Please generate a new SQL query with refined conditions to improve relevance or increase the sample size."""
+#     - If data is relevant and useful, calls the data analyst function with the data and original prompt.
+#     - If data is not relevant or the sample size is too small, prompts Agent 1 for a new SQL query.
+#     """
+#     if is_data_relevant(data) and is_sample_size_sufficient(data):
+#         # Data meets quality criteria - send to analyst
+#         logging.info("Data is relevant and sufficient. Proceeding to analysis.")
+#         analyze_data(data, original_prompt)
+#     else:
+#         # Data does not meet quality criteria - request new SQL query from Agent 1
+#         logging.warning("Data is not relevant or insufficient. Reinvoking Agent 1 for a new SQL query.")
+#         new_prompt = f"""The previous SQL query did not yield relevant or sufficient results.
+#         Original request: "{original_prompt}"
+#         Please generate a new SQL query with refined conditions to improve relevance or increase the sample size."""
         
-        # Generate a new SQL query using Agent 1
-        new_query = llm.generate_sql_query(new_prompt)
-        logging.info(f"Generated new SQL query: {new_query}")
+#         # Generate a new SQL query using Agent 1
+#         new_query = llm.generate_sql_query(new_prompt)
+#         logging.info(f"Generated new SQL query: {new_query}")
 
-        # Execute the new SQL query using Agent 2
-        csv_file_path = "datasets/samples.csv"
-        new_data = llm.execute_sql_query(new_query, csv_file_path)
+#         # Execute the new SQL query using Agent 2
+#         csv_file_path = "datasets/samples.csv"
+#         new_data = llm.execute_sql_query(new_query, csv_file_path)
 
-        # Re-evaluate the new results
-        evaluate_query_results(new_data, original_prompt, sql_generator_agent, llm)
+#         # Re-evaluate the new results
+#         evaluate_query_results(new_data, original_prompt, sql_generator_agent, llm)
 
 def analyze_data(data: Any, prompt: str) -> None:
     """
@@ -102,9 +103,15 @@ def analyze_data(data: Any, prompt: str) -> None:
     print(f"Data: {data}")
 
 def main(user_query):
-    api_key = os.environ.get("OPENAI_API_KEY")
+    api_key = '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'
     llm = LLM()
     llm_config = {"config_list": [{"model": "gpt-4o-mini", "api_key": api_key}]}
+
+    evaluation_agent = ConversableAgent("data_eval_agent",
+                                        system_message=Prompts.evaluation,
+                                        llm_config=llm_config)
+    evaluation_agent.register_for_llm(name="data_eval_agent", description="Evaluates data and gauges whether it is good enough or not for use in answering prompt.")
+    evaluation_agent.register_for_execution(name="data_eval_agent")
 
 
     # agent 0a in diagram
@@ -233,21 +240,26 @@ def main(user_query):
 
     # print("Metric/RAG Response", metric_response)
 
-
-    #Add logic for SQL generation / execution based on EDA response
-    sql_query = llm.generate_sql_query(eda_response, user_query)
-
-    if sql_query:
+    # use counter avoid inf loop
+    count = 0
+    while True:
+        count += 1
+        # Generate SQL query
+        sql_query = llm.generate_sql_query(eda_response, user_query)
         print(f"SQL Query Generated: \n {sql_query}")
-        sql_result = llm.execute_sql_query(sql_query, csv_path)
-    
 
+        sql_result = llm.execute_sql_query(sql_query, csv_path)
         if isinstance(sql_result, pd.DataFrame):
             print(f"SQL Query executed successfully: {sql_result}")
-        else:
-            print("SQL Query execution failed.")
-    else:
-        print("SQL Query generation failed.")
+        result_satisfactory = evaluation_agent.generate_reply(messages=[
+            {"role": "user", "content": f"Does the SQL data output: {sql_result} contain enough data to help us answer the user's query: {user_query}? Be lenient :)\n"}
+        ])
+        if "continue" in result_satisfactory or count == 3:
+            print("Data retrieved from the database is satisfactory. Advancing to analysis.")
+            break
+        elif "redo" in result_satisfactory:
+            print("Data received from querying database is not relevant or enough to answer prompt. Regenerating a new query.")
+            continue
 
 
     #Add call to web scraper agent
@@ -256,6 +268,10 @@ def main(user_query):
 
     #(TODO: adjust analysis/visualization agents to take correct types, assuming df and array right now.)
     #Logic for data analyst agent
+
+    # web_summary = summarize_online_and_review_data(user_query)
+    # print(web_summary)
+
     analysis_response = data_analyst_agent.generate_reply(
         messages=[
             {
@@ -283,8 +299,7 @@ def main(user_query):
 
     # Execute the generated visualization code
     visualizations = visualization_executor.execute_visualization_code(visualization_code, sql_result, web_sentiments)
-    # Ensure visualizations is a list
-    visualizations = [visualizations] if isinstance(visualizations, str) else visualizations
+    
     # Return both analysis and visualizations
     return {
         "analysis": analysis_response,

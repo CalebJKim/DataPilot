@@ -13,6 +13,7 @@ class Prompts:
       - Use the exact column names as they appear in the database schema, including spaces.
       - If important columns are mentioned in the prompt, use those names in the SQL query without modifying their text at all.
     
+    Once you have constructed the query, please randomize the order that it is sorted in and then enforce a strict limit of 1000 rows of data.
 
     Return only the SQL query as plain text, without any additional information.
     """
@@ -124,4 +125,8 @@ class Prompts:
   - Validated for data consistency, ensuring all lists or arrays have matching dimensions.
   """
 
-  
+  evaluation = """
+    You are a helpful data analysis assistant. Given the following entries of data, determine if they are sufficient the user's question or prompt. If the data
+    is sufficient and relevant, you must reply with only "continue" but if the data is not great and should be re-evaluated, please respond with only "redo".
+    Make sure your response is either the word "continue" or "redo". Do not include any other information.
+  """

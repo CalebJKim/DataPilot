@@ -104,3 +104,192 @@ INFO:root:Time to clean SQL query: 0.0006 seconds
 INFO:root:Total time for SQL generation: 0.9418 seconds
 INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 0.9220 seconds
+INFO:root:Time to clean SQL query: 0.0003 seconds
+INFO:root:Total time for SQL generation: 0.9226 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.445258 seconds
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 0.7809 seconds
+INFO:root:Time to clean SQL query: 0.0004 seconds
+INFO:root:Total time for SQL generation: 0.7817 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.443868 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.949696 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:werkzeug:127.0.0.1 - - [19/Dec/2024 22:15:00] "[35m[1mPOST /api/llm-query HTTP/1.1[0m" 500 -
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 1.1207 seconds
+INFO:root:Time to clean SQL query: 0.0007 seconds
+INFO:root:Total time for SQL generation: 1.1220 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.408632 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.754031 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 1.0508 seconds
+INFO:root:Time to clean SQL query: 0.0003 seconds
+INFO:root:Total time for SQL generation: 1.0515 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.435978 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.850080 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 1.0028 seconds
+INFO:root:Time to clean SQL query: 0.0004 seconds
+INFO:root:Total time for SQL generation: 1.0035 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.444164 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.790610 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 1.0023 seconds
+INFO:root:Time to clean SQL query: 0.0004 seconds
+INFO:root:Total time for SQL generation: 1.0033 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.461075 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.843621 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 1.0768 seconds
+INFO:root:Time to clean SQL query: 0.0004 seconds
+INFO:root:Total time for SQL generation: 1.0776 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.418555 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.843266 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 1.1511 seconds
+INFO:root:Time to clean SQL query: 0.0004 seconds
+INFO:root:Total time for SQL generation: 1.1520 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.439078 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.978961 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 1.1659 seconds
+INFO:root:Time to clean SQL query: 0.0004 seconds
+INFO:root:Total time for SQL generation: 1.1668 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 1.1092 seconds
+INFO:root:Time to clean SQL query: 0.0004 seconds
+INFO:root:Total time for SQL generation: 1.1100 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 1.0237 seconds
+INFO:root:Time to clean SQL query: 0.0001 seconds
+INFO:root:Total time for SQL generation: 1.0243 seconds
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 1.0410 seconds
+INFO:root:Time to clean SQL query: 0.0001 seconds
+INFO:root:Total time for SQL generation: 1.0415 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.413599 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.886478 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 0.8248 seconds
+INFO:root:Time to clean SQL query: 0.0004 seconds
+INFO:root:Total time for SQL generation: 0.8257 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.424894 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /chat/completions in 0.854651 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 0.9108 seconds
+INFO:root:Time to clean SQL query: 0.0004 seconds
+INFO:root:Total time for SQL generation: 0.9116 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 0.8379 seconds
+INFO:root:Time to clean SQL query: 0.0001 seconds
+INFO:root:Total time for SQL generation: 0.8385 seconds
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 0.8460 seconds
+INFO:root:Time to clean SQL query: 0.0001 seconds
+INFO:root:Total time for SQL generation: 0.8467 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 0.8446 seconds
+INFO:root:Time to clean SQL query: 0.0001 seconds
+INFO:root:Total time for SQL generation: 0.8449 seconds
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 0.8318 seconds
+INFO:root:Time to clean SQL query: 0.0000 seconds
+INFO:root:Total time for SQL generation: 0.8320 seconds
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 0.8567 seconds
+INFO:root:Time to clean SQL query: 0.0001 seconds
+INFO:root:Total time for SQL generation: 0.8573 seconds
+INFO:werkzeug:127.0.0.1 - - [19/Dec/2024 23:21:25] "POST /api/llm-query HTTP/1.1" 200 -
