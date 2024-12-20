@@ -12,6 +12,7 @@ class Prompts:
       - Always use the table name 'transactions'.
       - Use the exact column names as they appear in the database schema, including spaces.
       - If important columns are mentioned in the prompt, use those names in the SQL query without modifying their text at all.
+    
 
     Return only the SQL query as plain text, without any additional information.
     """
