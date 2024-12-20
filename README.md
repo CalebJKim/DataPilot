@@ -4,16 +4,15 @@
 Welcome to the **Data Engineer Agent Project**! This project aims to automate data ingestion pipelines and streamline Business Intelligence (BI) reporting using **StateFlow** and **Large Language Models (LLMs)**. We're also exploring automation for DevOps teams by generating real-time incident response playbooks based on observability alerts and codebase knowledge. All powered by advanced AI, this agent will reduce manual intervention and boost system efficiency.
 
 ### Key Features
-- **Automated Data Pipelines**: No more manual data ingestion! We'll automate data workflows with tools like **Apache NiFi** and **Airflow**.
-- **SQL Query Generation**: Translate business-level requests into **SQL queries** using **LLMs** and datasets like **Spider**.
+- **SQL Query Generation**: Translate business-level requests into **SQL queries** using state-of-the-art **LLMs**.
 - **Business Intelligence Insights**: Effortlessly generate BI reports using real-time data.
-- **Incident Response Automation**: DevOps teams get instant playbooks based on live system behavior and code knowledge.
-- **Enterprise-Grade Robustness**: Scaling for multi-cloud environments while ensuring **trustworthiness** and **accuracy** in complex data ecosystems.
+- **Incident Response Automation**: DevOps teams can easily request data through natural language querying without worrying about structure.
+- **Enterprise-Grade Robustness**: Capacity to scale for multi-database environments while ensuring **trustworthiness** and **accuracy** in complex data ecosystems.
 
 ### Why This Matters
 Managing data pipelines and handling BI requests can be time-consuming. With our Data Engineer Agent, we aim to achieve:
-- 📊 **Instant BI Reports**: LLMs do the heavy lifting to provide quick, actionable insights.
-- 🤖 **Automated Playbooks**: Real-time response playbooks for DevOps, generated on-the-fly based on system alerts.
+- 📊 **Instant Data Reports**: LLMs do the heavy lifting to provide quick, actionable insights.
+- 🤖 **Automated Playbooks**: Real-time insights and recommendation playbooks for Data Analysis and DevOps, generated on-the-fly.
 - 🔍 **Less Manual Work**: Automated workflows mean you focus on strategy, not maintenance.
   
 ### Research Focus
@@ -23,10 +22,11 @@ Managing data pipelines and handling BI requests can be time-consuming. With our
 4. **Tackling LLM Limitations**: Mitigating hallucinations and ensuring data trustworthiness.
 5. **Enterprise Integration**: Scaling across multi-cloud and complex data environments.
 
-### Tech Stack
-- **LLMs**: Powering natural language to SQL transformations.
-- **StateFlow**: Managing complex workflows.
-- **Work In Progress**: Project is under construction, this section will be updated accordingly :D
-
 ### 🧠 Built On Top of Prior Work
-We leverage advanced models like **SQLNet**, **Codex**, and frameworks like **Spider** to handle natural language-to-SQL translations, improving upon their limitations to manage **complex queries** and **dynamic schemas**. In DevOps, we’re taking observability tools like **Prometheus** to the next level with automated response actions.
+We leverage advanced data query languages and visualization frameworks to boost natural language-to-SQL translations, improving upon their limitations to manage **complex queries** and **dynamic schemas**.
+
+### Run it yourself
+1. In the frontend directory, run npm start to launch the electron app interface.
+2. In the main directory, run python app.py to launch the flask server.
+3. Query the database through natural language in the frontend interface.
+4. Swap out dataset for desired use case and fit database schema context accordingly.
