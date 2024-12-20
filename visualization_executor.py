@@ -32,18 +32,19 @@ def execute_visualization_code(code, sql_result, web_sentiments):
         temp_file.write(cleaned_code.encode('utf-8'))
         temp_file_path = temp_file.name
 
-    # Execute the temporary Python file
+    # Execute the temporary Python file and capture the output
     try:
-        subprocess.run([sys.executable, temp_file_path], check=True)
+        result = subprocess.run([sys.executable, temp_file_path], check=True, capture_output=True, text=True)
+        base64_image = result.stdout.strip()
     except subprocess.CalledProcessError as e:
         print(f"Error executing the visualization script: {e}")
         return None
+    finally:
+        # Remove the temporary file after execution
+        os.remove(temp_file_path)
 
-    # Optionally, remove the temporary file after execution
-    # os.remove(temp_file_path)
-
-    # Return a placeholder or path to the saved visualizations
-    return "Path to saved visualizations or other relevant output"
+    # Return the base64 string
+    return base64_image
 
 def save_plot_to_base64(fig):
     """

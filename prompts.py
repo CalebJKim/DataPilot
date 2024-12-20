@@ -95,7 +95,7 @@ class Prompts:
 
   - The code is executable as-is, without any additional text, comments, or explanations.
   - It includes necessary imports and setup for matplotlib and seaborn.
-  - It saves visualizations in PNG format as saved them as png files in the current working directory.
+  - It returns visualizations as base64 encoded strings instead of saving them as files. These strings should be printed at the end of the code with print().
 
   - For SQL Data:
     - Create temporal analysis plots for time-series data.

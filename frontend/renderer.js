@@ -12,8 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     input.value = '';
 
     const reply = await ipcRenderer.invoke('query-llm', userMessage);
-    const formattedReply = formatReplyArray(reply);
-    addMessageToChat('LLM', formattedReply);
+    console.log('Reply from backend:', reply);
+    console.log('Type of visualizations:', typeof reply.visualizations);
+    console.log('Visualizations:', reply.visualizations);
+    
+    handleResponse(reply);
   });
 
   function formatReplyArray(replyArray) {
@@ -47,5 +50,32 @@ document.addEventListener('DOMContentLoaded', () => {
     messageElem.innerHTML = `<strong>${sender}:</strong><br>${message}`;
     chatContainer.appendChild(messageElem);
     chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+
+  function handleResponse(reply) {
+    if (reply.error) {
+      addMessageToChat('Error', reply.error);
+      return;
+    }
+
+    if (reply.analysis) {
+      addMessageToChat('LLM', reply.analysis);
+    }
+
+    if (reply.visualizations) {
+      // Check if visualizations is an array
+      if (Array.isArray(reply.visualizations)) {
+        reply.visualizations.forEach((visualization) => {
+          const img = document.createElement('img');
+          img.src = `data:image/png;base64,${visualization}`;
+          chatContainer.appendChild(img);
+        });
+      } else {
+        // Handle single visualization string
+        const img = document.createElement('img');
+        img.src = `data:image/png;base64,${reply.visualizations}`;
+        chatContainer.appendChild(img);
+      }
+    }
   }
 });

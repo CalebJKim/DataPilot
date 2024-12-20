@@ -23,7 +23,8 @@ app.on('window-all-closed', () => {
 ipcMain.handle('query-llm', async (event, userMessage) => {
   try {
     const response = await axios.post('http://localhost:5000/api/llm-query', { message: userMessage });
-    return response.data.reply;
+    // console.log('Response from backend:', response.data);
+    return response.data;
   } catch (error) {
     console.error('Error querying LLM:', error);
     return { error: 'There was an error connecting to the LLM backend.' };

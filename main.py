@@ -10,7 +10,7 @@ from autogen import AssistantAgent
 from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
 from prompts import Prompts
 from typing import Dict, Any
-from webAgent import main as web_agent_main
+# from webAgent import main as web_agent_main
 
 #from dataframe_analyzer import is_data_relevant, is_sample_size_sufficient
 
@@ -282,7 +282,8 @@ def main(user_query):
 
     # Execute the generated visualization code
     visualizations = visualization_executor.execute_visualization_code(visualization_code, sql_result, web_sentiments)
-    
+    # Ensure visualizations is a list
+    visualizations = [visualizations] if isinstance(visualizations, str) else visualizations
     # Return both analysis and visualizations
     return {
         "analysis": analysis_response,
