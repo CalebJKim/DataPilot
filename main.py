@@ -240,6 +240,7 @@ def main(user_query):
     if sql_query:
         print(f"SQL Query Generated: \n {sql_query}")
         sql_result = llm.execute_sql_query(sql_query, csv_path)
+    
 
         if isinstance(sql_result, pd.DataFrame):
             print(f"SQL Query executed successfully: {sql_result}")
