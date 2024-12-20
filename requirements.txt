@@ -26,3 +26,7 @@ ipython
 autogen-agentchat[retrievechat]~=0.2
 unstructured[all-docs]
 chromadb<=0.5.0
+requests
+beautifulsoup4
+textblob
+praw

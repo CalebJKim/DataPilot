@@ -10,6 +10,7 @@ from autogen import AssistantAgent
 from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
 from prompts import Prompts
 from typing import Dict, Any
+from webAgent import main as web_agent_main
 
 #from dataframe_analyzer import is_data_relevant, is_sample_size_sufficient
 
@@ -249,7 +250,8 @@ def main(user_query):
 
 
     #Add call to web scraper agent
-    web_sentiments = []
+    web_sentiments = web_agent_main(user_query)
+    print("WEB SENTIMENTS: \n", web_sentiments)
 
 
     #(TODO: adjust analysis/visualization agents to take correct types, assuming df and array right now.)

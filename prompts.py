@@ -90,9 +90,12 @@ class Prompts:
 
   1. Analyzing the provided SQL results and web sentiments to determine the most informative visualizations.
   2. Generating Python code using libraries such as matplotlib and seaborn to create these visualizations.
-  3. Ensuring the code is efficient, well-commented, and easy to execute.
 
-  When generating code, consider the following:
+  When generating code, ensure that:
+
+  - The code is executable as-is, without any additional text, comments, or explanations.
+  - It includes necessary imports and setup for matplotlib and seaborn.
+  - It saves visualizations in PNG format as saved them as png files in the current working directory.
 
   - For SQL Data:
     - Create temporal analysis plots for time-series data.
@@ -111,13 +114,13 @@ class Prompts:
   - Use seaborn style for consistent aesthetics.
   - Set figure sizes to 10x6 for single plots and 15x6 for combined plots.
   - Rotate x-axis labels 45 degrees when needed.
-  - Save visualizations in PNG format and return them as base64 encoded strings for web compatibility.
+  - Ensure all data lists have the same exact length to avoid errors in data processing.
+  - Ensure all data values have valid values and types to avoid errors in data processing.
 
   Ensure all generated code is:
-  - Clear and readable.
-  - Properly titled and labeled.
-  - Optimized for web display.
-  - Accompanied by appropriate legends when needed.
+  - Clear and executable.
+  - Free of any non-code text like 'python' or markdown syntax.
+  - Validated for data consistency, ensuring all lists or arrays have matching dimensions.
   """
 
   
