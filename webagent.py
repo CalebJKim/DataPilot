@@ -12,8 +12,8 @@ def fetch_car_data(car_model: str) -> Dict[str, List[str]]:
 
     reddit = praw.Reddit(
         # client_id=os.getenv('REDDIT_CLIENT_ID'),
-        client_id='lw-HvQk3g6qXmAh02Qjo_A',
-        client_secret='ga9rnhrBSdLipwE50qCL7ktmSE1bAg',
+        client_id='lw-Jonah',
+        client_secret='Jonah',
         user_agent="car_review_scraper"
     )
 
@@ -38,7 +38,7 @@ def fetch_car_data(car_model: str) -> Dict[str, List[str]]:
 # Fetch Car Data from Bing Web Search
 def fetch_web_data(car_model: str) -> Dict[str, List[str]]:
     print(f"Fetching web search results for: {car_model}")
-    bing_api_key = 'de4d3772ac894cf28faabe9b37ae2256'
+    bing_api_key = 'Jonah'
     if not bing_api_key:
         raise ValueError("BING_API_KEY environment variable is not set.")
 
@@ -63,7 +63,7 @@ def fetch_web_data(car_model: str) -> Dict[str, List[str]]:
 def summarize_reviews_via_llm(reviews: List[str], llm_config) -> List[str]:
     from autogen import OpenAIWrapper
 
-    model = OpenAIWrapper(api_key='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', model=llm_config["config_list"][0]["model"])
+    model = OpenAIWrapper(api_key='Jonah', model=llm_config["config_list"][0]["model"])
 
     prompt = f"""
     Here are reviews and opinions about a car model:

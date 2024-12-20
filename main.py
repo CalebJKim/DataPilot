@@ -103,7 +103,7 @@ def analyze_data(data: Any, prompt: str) -> None:
     print(f"Data: {data}")
 
 def main(user_query):
-    api_key = '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'
+    api_key = 'JONAH'
     llm = LLM()
     llm_config = {"config_list": [{"model": "gpt-4o-mini", "api_key": api_key}]}
 
