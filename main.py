@@ -10,7 +10,7 @@ from autogen import AssistantAgent
 from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
 from prompts import Prompts
 from typing import Dict, Any
-from webAgent import main as web_agent_main
+# from webAgent import main as web_agent_main
 
 #from dataframe_analyzer import is_data_relevant, is_sample_size_sufficient
 
@@ -240,6 +240,7 @@ def main(user_query):
     if sql_query:
         print(f"SQL Query Generated: \n {sql_query}")
         sql_result = llm.execute_sql_query(sql_query, csv_path)
+    
 
         if isinstance(sql_result, pd.DataFrame):
             print(f"SQL Query executed successfully: {sql_result}")

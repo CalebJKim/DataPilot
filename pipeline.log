@@ -78,3 +78,29 @@ INFO:root:Loaded carsalesdata.csv with 17662 rows.
 INFO:root:Data cleaned. Dropped NA values.
 INFO:root:Data saved to SQLite database.
 INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 1.1349 seconds
+INFO:root:Time to clean SQL query: 0.0003 seconds
+INFO:root:Total time for SQL generation: 1.1357 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 1.3549 seconds
+INFO:root:Time to clean SQL query: 0.0004 seconds
+INFO:root:Total time for SQL generation: 1.3557 seconds
+INFO:root:Loaded carsalesdata.csv with 17662 rows.
+INFO:root:Data cleaned. Dropped NA values.
+INFO:root:Data saved to SQLite database.
+INFO:root:Formatted prompt prepared.
+INFO:root:Time for invoke in SQL generation: 0.9406 seconds
+INFO:root:Time to clean SQL query: 0.0006 seconds
+INFO:root:Total time for SQL generation: 0.9418 seconds
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

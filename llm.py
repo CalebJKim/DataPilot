@@ -83,6 +83,7 @@ class LLM:
                 results = pd.read_sql_query(sql_query, conn)
                 sql_end = time.time()
                 print(f"Time to execute SQL query: {sql_end - sql_start:.4f} seconds")
+                print(results)
                 return results
             except Exception as e:
                 print(f"Query Execution Error: {e}")
